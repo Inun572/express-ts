@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import booksRoutes from './books/routes';
-import { logger } from './middlewares';
+import { checkToken, logger } from './middlewares';
 
 dotenv.config();
 
@@ -10,8 +10,9 @@ const PORT = process.env.PORT || 6969;
 
 app.use(express.json());
 app.use(logger);
+app.use(checkToken);
 
-app.get('/', async (req: Request, res: Response) => {
+app.get('/', (req: Request, res: Response) => {
   res.json({
     message: 'Hello, World! Please use /books to get all books',
   });
